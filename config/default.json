@@ -1,6 +1,6 @@
 {
     "appSecret": "",
     "pageAccessToken": "",
-    "validationToken": "",
+    "validationToken": "my_pixel_brain_in_formalin",
     "serverURL": ""
 }
