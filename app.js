@@ -86,6 +86,7 @@ app.get('/webhook', function(req, res) {
  */
 app.post('/webhook', function (req, res) {
   var data = req.body;
+  console.log('Pixel Brain received a message\n', JSON.stringify(data, null, 2));
 
   // Make sure this is a page subscription
   if (data.object == 'page') {
