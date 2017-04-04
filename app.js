@@ -369,10 +369,19 @@ function receivedMessage(event) {
 
       default:
         sendTextMessage(senderID, messageText);
+        witReact(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
+}
+
+function witReact(senderID, messageText) {
+    console.log('[witReact] senderID: %s \n messageText: %s \n wit: ',
+        senderID,
+        messageText,
+        JSON.stringify(wit, null, 2)
+    );
 }
 
 
