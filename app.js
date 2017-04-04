@@ -377,7 +377,7 @@ function receivedMessage(event) {
 }
 
 function witReact(senderID, messageText) {
-    const sessionId = findOrCreateSession(recipientId);
+    const sessionId = findOrCreateSession(senderID);
 
     console.log('[witReact] sessionId: %s \nsenderID: %s \nmessageText: %s \n wit: ',
         sessionId,
