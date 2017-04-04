@@ -95,6 +95,9 @@ const actions = {
         console.log('[wit:actions:send:request]', JSON.stringify(request, null, 2));
         return new Promise(function(resolve, reject) {
             console.log('[wit:actions:send:response]', JSON.stringify(response, null, 2));
+            if(response.text && sessions[request.sessionId] && sessions[request.sessionId].fbid){
+                sendTextMessage(sessions[request.sessionId].fbid, response.text);
+            }
             return resolve();
         });
     }
@@ -368,7 +371,7 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        //sendTextMessage(senderID, messageText);
         witReact(senderID, messageText);
     }
   } else if (messageAttachments) {
