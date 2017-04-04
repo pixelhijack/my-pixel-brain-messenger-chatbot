@@ -57,11 +57,11 @@ const WIT_TOKEN = (process.env.WIT_TOKEN) ?
   (process.env.WIT_TOKEN) :
   config.get('witToken');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
-  console.error("Missing config values");
-  console.error('Missing something? \nSecret? %s Validation? %s Access? %s Url? %s', !!APP_SECRET, !!VALIDATION_TOKEN, !!PAGE_ACCESS_TOKEN, !!SERVER_URL);
-  //process.exit(1);
-}
+if (!APP_SECRET) { throw new Error('[CONFIG] missing APP_SECRET') }
+if (!VALIDATION_TOKEN) { throw new Error('[CONFIG] missing VALIDATION_TOKEN') }
+if (!PAGE_ACCESS_TOKEN) { throw new Error('[CONFIG] missing PAGE_ACCESS_TOKEN') }
+if (!SERVER_URL) { throw new Error('[CONFIG] missing SERVER_URL') }
+if (!WIT_TOKEN) { throw new Error('[CONFIG] missing WIT_TOKEN') }
 
 app.get('/', function (req, res) {
     res.send('You just woke the mighty pixel brain up...');
