@@ -2,5 +2,6 @@
     "appSecret": "",
     "pageAccessToken": "",
     "validationToken": "my_pixel_brain_in_formalin",
-    "serverURL": ""
+    "serverURL": "",
+    "witToken": ""
 }

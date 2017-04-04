@@ -16,7 +16,9 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),
-  request = require('request');
+  request = require('request'),
+  Wit = require('node-wit').Wit,
+  log = require('node-wit').log;
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -50,6 +52,10 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
+
+const WIT_TOKEN = (process.env.WIT_TOKEN) ?
+  (process.env.WIT_TOKEN) :
+  config.get('witToken');
 
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
