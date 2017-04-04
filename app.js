@@ -91,7 +91,7 @@ const findOrCreateSession = (fbid) => {
 
 // Wit bot actions
 const actions = {
-    send(request, response) {
+    send: function(request, response) {
         console.log('[wit:actions:send:request]', JSON.stringify(request, null, 2));
         return new Promise(function(resolve, reject) {
             console.log('[wit:actions:send:response]', JSON.stringify(response, null, 2));
@@ -141,7 +141,7 @@ app.get('/webhook', function(req, res) {
  */
 app.post('/webhook', function (req, res) {
   var data = req.body;
-  console.log('Pixel Brain received a message\n', JSON.stringify(data, null, 2));
+  console.log('[/webhook] request body: \n', JSON.stringify(data, null, 2));
 
   // Make sure this is a page subscription
   if (data.object == 'page') {
@@ -377,11 +377,29 @@ function receivedMessage(event) {
 }
 
 function witReact(senderID, messageText) {
-    console.log('[witReact] senderID: %s \n messageText: %s \n wit: ',
+    const sessionId = findOrCreateSession(recipientId);
+
+    console.log('[witReact] sessionId: %s \nsenderID: %s \nmessageText: %s \n wit: ',
+        sessionId,
         senderID,
         messageText,
         JSON.stringify(wit, null, 2)
     );
+    wit.runActions(
+        sessionId, // the user's current session
+        messageText, // the user's message
+        sessions[sessionId].context // the user's current session state
+    ).then((context) => {
+      // Our bot did everything it has to do.
+      // Now it's waiting for further messages to proceed.
+      console.log('[witReact] Waiting for next user messages, context: ', context);
+
+      // Updating the user's current session state
+      sessions[sessionId].context = context;
+    })
+    .catch((err) => {
+      console.error('[witReact] Oops! Got an error from Wit: ', err.stack || err);
+    });
 }
 
 
